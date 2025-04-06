@@ -1,0 +1,16 @@
+{
+    "name": "alexander/ex1",
+    "description": "Homework for Geekbrains",
+    "autoload": {
+        "psr-4": {
+            "src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AlexanderTsaricov",
+            "email": "salispiligrim@yandex.ru"
+        }
+    ],
+    "require": {}
+}
