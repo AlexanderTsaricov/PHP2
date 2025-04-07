@@ -8,6 +8,10 @@ use PDO;
 class Get_events extends Command {
     protected $name = "get_events";
     protected $description = "Show all events in database";
+
+    public function __construct() {
+        parent::__construct();
+    }
     
     public function run(array $options = []) {
         $db = new Database();
@@ -27,10 +31,11 @@ class Get_events extends Command {
             );
         }
 
-        echo "События в базе:\n";
+        $this->view->send("События в базе:\n");
 
         foreach ($eventObjects as $event) {
-            echo $event->getId() . ": " . $event->getName() . ' (CRON: ' . $event->getCron() . ")\n";
+            $message = $event->getId() . ": " . $event->getName() . ' (CRON: ' . $event->getCron() . ")";
+            $this->view->send($message);
         }
     }
 }

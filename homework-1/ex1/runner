@@ -1,5 +1,9 @@
 <?php
 require __DIR__ . '/vendor/autoload.php'; // ✅ самый прямой путь
+
+use App\src\Controllers\DeamonEventsSender;
+use App\src\Controllers\EventSender;
+use App\src\Controllers\Handlers\EventHandler;
 use App\src\Controllers\Save_event;
 use App\src\Storage\Database;
 use App\src\Controllers\Get_events;
@@ -40,6 +44,19 @@ switch ($command) {
     case "get_events":
         $get_events = new Get_events();
         $get_events->run();
+        break;
+    case "send_events":
+        $events = EventHandler::handleEvent();
+        $sender = new EventSender();
+        foreach ($events as $event) {
+            $eventParametrs["message"] = $event['text'];
+            $eventParametrs["receiver"] = $event['receiver'];
+            $sender->run($eventParametrs);
+        }
+        break;
+    case 'deamon_events_sender':
+        $deamon = new DeamonEventsSender();
+        $deamon->run();
         break;
     default:
         die("Error command - invalid command: " . $command . "\n");

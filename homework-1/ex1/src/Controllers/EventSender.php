@@ -1,11 +1,13 @@
 <?php
 
 namespace App\src\Controllers;
-class EventSender
+class EventSender extends Command
 {
-public function sendMessage(string $receiver, string $message)
-{
-echo date('d.m.y H:i') . " Я отправил сообщение $message получателю с id
-$receiver\n";
-}
+    protected $name = "event_sender";
+    protected $description = "send event to user";
+    public function run(array $options = [])
+    {
+        $message = date('d.m.y H:i') . " Я отправил сообщение " . $options['message'] . " получателю с id " . $options['receiver'];
+        $this->view->send($message);
+    }
 }

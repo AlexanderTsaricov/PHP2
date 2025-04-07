@@ -11,5 +11,7 @@
             "email": "salispiligrim@yandex.ru"
         }
     ],
-    "require": {}
+    "require": {
+        "mtdowling/cron-expression": "^1.2"
+    }
 }

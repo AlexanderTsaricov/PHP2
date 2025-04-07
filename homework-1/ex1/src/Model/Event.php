@@ -21,6 +21,14 @@ class Event {
         return $this->cron;
     }
 
+    public function getText() {
+        return $this->text;
+    }
+
+    public function getReceiver() {
+        return $this->receiver;
+    }
+
     public function __construct($id = null , string $name, int $receiver,  string $text, string $cron) {
         $this->name = $name;
         $this->receiver = $receiver;

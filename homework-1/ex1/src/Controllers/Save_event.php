@@ -26,9 +26,11 @@ class Save_event extends Command {
         }
         
         if ($receiver === null) {
-            die("Error receiver parametr: don't have parametr receiver. Please add parametr\n");
+            $this->view->send("Error receiver parametr: don't have parametr receiver. Please add parametr", true);
+            exit();
         } else if (filter_var($receiver, FILTER_VALIDATE_INT) == false) {
-            die("Error receiver parametr: need by are number\n");
+            $this->view->send("Error receiver parametr: need by are number", true);
+            exit();
         }
         
         if ($text === null) {
@@ -39,19 +41,15 @@ class Save_event extends Command {
             $cron = "* * 0 * *";
         }
 
-        echo "started command: " . $this->name . "\n";
+        $this->view->send("started command: " . $this->name);
 
         $connection = Database::connect();
         $stmt = $connection->prepare("INSERT INTO events (name, receiver, text, cron) VALUES (:name, :receiver, :text, :cron)");
-
-        // Привязываем параметры
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':receiver', $receiver);
         $stmt->bindParam(':text', $text);
         $stmt->bindParam(':cron', $cron);
-
-        // Выполняем запрос
         $stmt->execute();
-        echo "command sussful\n";
+        $this->view->send("command sussful");
     }
 }
