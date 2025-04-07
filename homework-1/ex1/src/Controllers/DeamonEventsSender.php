@@ -8,9 +8,12 @@ class DeamonEventsSender extends Command {
 
     private Logs $logger;
 
+    private $lastSendEvent;
+
     public function __construct() {
         parent::__construct();
         $this->logger = new Logs();
+        $this->lastSendEvent = "";
     }
 
     public function run($options = []) {
@@ -26,12 +29,15 @@ class DeamonEventsSender extends Command {
     
             $events = EventHandler::handleEvent();
             foreach ($events as $event) {
-                $this->logger->write(
-                    date('d.m.y H:i') . " Я отправил сообщение " . $event['text'] . " получателю с id " . $event['receiver']
-                );
+                if ($this->lastSendEvent != $event['receiver']) {
+                    $this->logger->write(
+                        date('d.m.y H:i') . " Я отправил сообщение " . $event['text'] . " получателю с id " . $event['receiver']
+                    );
+                    $this->lastSendEvent=$event['receiver'];
+                }
             }
     
-            sleep(60);
+            sleep(1);
         }
     
         $this->logger->write("Worker shutting down");
