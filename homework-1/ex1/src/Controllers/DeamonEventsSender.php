@@ -40,15 +40,10 @@ class DeamonEventsSender extends Command {
 
             while ($this->running) {
                 pcntl_signal_dispatch();
-                $this->logger->write("Daemon loop running...");
                 $events = EventHandler::handleEvent();
-                $sender = new EventSender();
                 foreach ($events as $event) {
-                    $eventParametrs = [];
-                    print_r($event);
-                    $eventParametrs["message"] = $event['text'];
-                    $eventParametrs["receiver"] = $event['receiver'];
-                    $sender->run($eventParametrs);
+                    
+                    $this->logger->write(date('d.m.y H:i') . " Я отправил сообщение " . $event['text'] . " получателю с id " . $event['receiver']);
                 }
                 sleep(1);
             }
