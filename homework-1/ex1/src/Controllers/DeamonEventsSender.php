@@ -31,7 +31,7 @@ class DeamonEventsSender extends Command {
                 );
             }
     
-            sleep(1);
+            sleep(60);
         }
     
         $this->logger->write("Worker shutting down");
