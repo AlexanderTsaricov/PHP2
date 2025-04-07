@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Model;
+namespace App\src\Model;
 
 class Event {
     private $id;

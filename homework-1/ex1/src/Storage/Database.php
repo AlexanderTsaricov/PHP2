@@ -1,5 +1,5 @@
 <?php
-namespace src\Storage;
+namespace App\src\Storage;
 
 use PDO;
 use PDOException;

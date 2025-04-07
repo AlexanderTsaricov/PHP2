@@ -1,8 +1,8 @@
 <?php
 require __DIR__ . '/vendor/autoload.php'; // ✅ самый прямой путь
-use src\Controllers\Save_event;
-use src\Storage\Database;
-use src\Controllers\Get_events;
+use App\src\Controllers\Save_event;
+use App\src\Storage\Database;
+use App\src\Controllers\Get_events;
 
 /**
  * c or command - command

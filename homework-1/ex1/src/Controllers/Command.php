@@ -1,6 +1,6 @@
 <?php
 
-namespace src\Controllers;
+namespace App\src\Controllers;
 
 abstract class Command {
     protected $name;

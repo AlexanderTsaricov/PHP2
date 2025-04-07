@@ -1,8 +1,8 @@
 <?php
 
-namespace src\Controllers;
-use src\Model\Event;
-use src\Storage\Database;
+namespace App\src\Controllers;
+use App\src\Model\Event;
+use App\src\Storage\Database;
 use PDO;
 
 class Get_events extends Command {

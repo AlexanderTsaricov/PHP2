@@ -1,9 +1,8 @@
 {
-    "name": "alexander/ex1",
-    "description": "Homework for Geekbrains",
+    "name": "app/src",
     "autoload": {
         "psr-4": {
-            "src\\": "src/"
+            "App\\src\\": "src/"
         }
     },
     "authors": [

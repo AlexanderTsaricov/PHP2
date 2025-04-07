@@ -1,9 +1,9 @@
 <?php
 
-namespace src\Controllers;
-use src\Controllers\Command;
-use src\Model\Event;
-use src\Storage\Database;
+namespace App\src\Controllers;
+use App\src\Controllers\Command;
+use App\src\Model\Event;
+use App\src\Storage\Database;
 
 class Save_event extends Command {
     protected $name = "save_event";
