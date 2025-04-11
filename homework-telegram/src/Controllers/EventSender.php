@@ -13,10 +13,10 @@ class EventSender extends Command
     public function __construct() {
         parent::__construct();
         $this->telegramApi = new TelegramApi();
+        
     }
     public function run(array $options = [])
     {
-        print_r($options);
         $sendIsOk = $this->telegramApi->sendMessage($options['message'], (int)$options['receiver']);
         if (!$sendIsOk[0]) {
             die('Error: '. $sendIsOk[1]);

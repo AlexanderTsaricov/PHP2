@@ -29,7 +29,7 @@ class TelegramApi {
      * @param mixed $user_id id telegrams user
      * @return array fisrt element - result response. If response is not ok - second element: error code
      */
-    public function sendMessage( $message, $user_id, $test=false ): array {
+    public function sendMessage( $message, $user_id): array {
         $sendUrl = $this->url ."sendMessage";
         $data = [
             "chat_id"=> $user_id,
