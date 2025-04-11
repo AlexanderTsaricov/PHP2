@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/vendor/autoload.php'; // ✅ самый прямой путь
+use App\src\Controllers\Gt_messages;
 use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
@@ -61,6 +62,10 @@ switch ($command) {
     case 'deamon_events_sender':
         $deamon = new DeamonEventsSender();
         $deamon->run();
+        break;
+    case 'gt_messages':
+        $gt_messages = new Gt_messages();
+        $gt_messages->run();
         break;
     default:
         die("Error command - invalid command: " . $command . "\n");
