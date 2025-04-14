@@ -10,7 +10,6 @@ use PDO;
 use App\src\Logs\Logs;
 
 class TimeSenderEvents extends Command {
-    // TODO: Почемму-то отправляет только одно сообщение
     private Database $db;
     private $connection;
     private $running = true;
