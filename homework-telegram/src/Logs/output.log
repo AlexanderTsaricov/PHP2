@@ -302,3 +302,40 @@ command sussful
 11.04.25 15:42 Я отправил сообщение "Надо вставить хуй" получателю с id 389495379
 11.04.25 15:42 Я отправил сообщение "Надо подрочить член" получателю с id 389495379
 11.04.25 15:42 Я отправил сообщение "Текст теста" получателю с id 389495379
+PHP Warning:  fopen(/media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Logs/output.log): Failed to open stream: No such file or directory in /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Logs/Logs.php on line 7
+PHP Stack trace:
+PHP   1. {main}() /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/runner:0
+PHP   2. App\src\Controllers\DeamonEventsSender->run($options = *uninitialized*) /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/runner:63
+PHP   3. App\src\Logs\Logs->write($message = 'Worker shutting down') /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Controllers/DeamonEventsSender.php:43
+PHP   4. fopen($filename = '/media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Logs/output.log', $mode = 'ab') /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Logs/Logs.php:7
+PHP Fatal error:  Uncaught TypeError: fwrite(): Argument #1 ($stream) must be of type resource, false given in /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Logs/Logs.php:8
+Stack trace:
+#0 /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Logs/Logs.php(8): fwrite()
+#1 /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Controllers/DeamonEventsSender.php(43): App\src\Logs\Logs->write()
+#2 /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/runner(63): App\src\Controllers\DeamonEventsSender->run()
+#3 {main}
+  thrown in /media/alexander/Disk2/Programming/PHP2/homeworks/homework-1/ex1/src/Logs/Logs.php on line 8
+14.04.25 12:17 Я отправил сообщение Text for test message получателю с id 389495379
+
+14.04.25 12:17 Я отправил сообщение Text for test message получателю с id 389495379
+
+14.04.25 12:17 Я отправил сообщение Text for test message получателю с id 389495379
+
+14.04.25 12:17 Я отправил сообщение Надо вставить хуй получателю с id 389495379
+
+14.04.25 12:17 Я отправил сообщение Надо подрочить член получателю с id 389495379
+
+14.04.25 12:17 Я отправил сообщение Текст теста получателю с id 389495379
+
+14.04.25 12:18 Я отправил сообщение Text for test message получателю с id 
+
+14.04.25 12:18 Я отправил сообщение Text for test message получателю с id 
+
+14.04.25 12:18 Я отправил сообщение Text for test message получателю с id 
+
+14.04.25 12:18 Я отправил сообщение Надо вставить хуй получателю с id 
+
+14.04.25 12:18 Я отправил сообщение Надо подрочить член получателю с id 
+
+14.04.25 12:18 Я отправил сообщение Текст теста получателю с id 
+

@@ -1,0 +1,1 @@
+{"version":1,"defects":{"TelegramApiTest::testInvalidSendMessage":8,"TelegramApiTest::testSendMessage":8,"TelegramApiTest::testGetMessages":8},"times":{"TelegramApiTest::testGetMessages":0.377,"TelegramApiTest::testSendMessage":0.399,"TelegramApiTest::testInvalidSendMessage":0.339}}

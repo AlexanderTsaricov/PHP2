@@ -38,17 +38,14 @@ class TelegramApi {
         $options = [
             'http' => [
                 'method' => 'POST',
-                'content' => http_build_query( $data )
+                'content' => http_build_query( $data ),
+                'header'  => "Content-Type: application/x-www-form-urlencoded",
+                'ignore_errors' => true
             ]
         ];
         $context = stream_context_create($options);
         $response = file_get_contents($sendUrl, false, $context);
-        $response = json_decode( $response );
-        $result = [];
-        $result[] = $response->ok;
-        if ( !$response->ok ) {
-            $result[] = $response->error_code;
-        }
+        $result = json_decode( $response, true );
 
         return $result;
     }
