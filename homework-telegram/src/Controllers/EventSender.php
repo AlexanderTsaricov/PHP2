@@ -18,8 +18,8 @@ class EventSender extends Command
     public function run(array $options = [])
     {
         $sendIsOk = $this->telegramApi->sendMessage($options['message'], (int)$options['receiver']);
-        if (!$sendIsOk[0]) {
-            die('Error: '. $sendIsOk[1]);
+        if (!$sendIsOk['ok']) {
+            die('Error: '. $sendIsOk['error_code']);
         }
         $message = date('d.m.y H:i') . " Я отправил сообщение " . $options['message'] . " получателю с id " . $options['receiver'];
         $this->view->send($message);
