@@ -20,16 +20,16 @@ class TelegramApiTest extends PHPUnit\Framework\TestCase {
                     "message" => [
                         "message_id" => 406,
                         "from" => [
-                            "id" => 389495379,
+                            "id" => 12345,
                             "is_bot" => false,
-                            "first_name" => "Александр",
-                            "username" => "salispiligrim",
+                            "first_name" => "Test",
+                            "username" => "testuser",
                             "language_code" => "ru"
                         ],
                         "chat" => [
                             "id" => 389495379,
-                            "first_name" => "Александр",
-                            "username" => "salispiligrim",
+                            "first_name" => "Test",
+                            "username" => "testuser",
                             "type" => "private"
                         ],
                         "date" => 1744890830,
