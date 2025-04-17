@@ -12,10 +12,9 @@ class EventTest extends PHPUnit\Framework\TestCase {
     public function testGetWithArrays(int $id, string $name, int $receiver, string $text, string $crone) {
         $event = new Event($id, $name, $receiver, $text, $crone);
         $getResult = $event->get();
-        $this->assertEquals($name, $getResult['name']);
-        $this->assertEquals($receiver, $getResult['receiver']);
-        $this->assertEquals($text, $getResult['text']);
-        $this->assertEquals($crone, $getResult['cron']);
+        $actualArray = [$getResult['name'], $getResult['receiver'], $getResult['text'], $getResult['cron']];
+        $expectedArray = [$name, $receiver, $text, $crone];
+        $this->assertSame($expectedArray, $actualArray);
 
     }
     
