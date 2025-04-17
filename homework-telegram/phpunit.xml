@@ -1,4 +1,8 @@
-<phpunit>
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="vendor/autoload.php">
+    <php>
+        <env name="TELEGRAM_TOKEN" value="TEST_TOKEN"/>
+    </php>
     <coverage>
         <include>
             <directory>./src</directory>
