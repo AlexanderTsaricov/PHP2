@@ -2,20 +2,24 @@
 
 namespace App\src\Controllers;
 use App\src\Model\Event;
+use App\src\Service\TelegramApi;
 use App\src\Storage\Database;
+use App\src\View\View;
 use PDO;
 
 class Get_events extends Command {
     protected $name = "get_events";
     protected $description = "Show all events in database";
 
-    public function __construct() {
-        parent::__construct();
+    protected Database $db;
+
+    public function __construct(View $view, TelegramApi $telegramApi, Database $db) {
+        parent::__construct($view, $telegramApi);
+        $this->db = $db;
     }
     
     public function run(array $options = []) {
-        $db = new Database();
-        $connection = $db::connect();
+        $connection = $this->db::connect();
         $stmt = $connection->query("SELECT * FROM events");
         $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

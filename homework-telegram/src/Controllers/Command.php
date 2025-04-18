@@ -4,6 +4,7 @@ namespace App\src\Controllers;
 
 use App\src\Service\TelegramApi;
 use App\src\View\ConsoleView;
+use App\src\View\View;
 
 abstract class Command {
     protected $name;
@@ -17,9 +18,9 @@ abstract class Command {
         echo "run command";
     }
 
-    public function __construct() {
-        $this->view = new ConsoleView();
-        $this->telegramApi = new TelegramApi();
+    public function __construct(View $view, TelegramApi $telegramApi) {
+        $this->view = $view;
+        $this->telegramApi = $telegramApi;
     }
 
     

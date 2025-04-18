@@ -12,7 +12,7 @@ class EventSender extends Command
     protected $description = "send event to user";
 
     public function __construct(TelegramApi $api, View $view) {
-        parent::__construct();
+        parent::__construct($view, $api);
         $this->telegramApi = $api;
         $this->view = $view;
         
