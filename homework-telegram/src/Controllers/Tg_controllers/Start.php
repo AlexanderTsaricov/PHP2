@@ -2,13 +2,19 @@
 namespace App\src\Controllers\Tg_controllers;
 use App\src\Controllers\Command;
 use App\src\Controllers\Save_event;
+use App\src\Service\TelegramApi;
+use App\src\Storage\Database;
+use App\src\View\View;
 
 class Start extends Command {
     private $flag;
 
-    public function __construct() {
-        parent::__construct();
+    private Save_event $save_event;
+
+    public function __construct(View $view, TelegramApi $api, Save_event $save_event) {
+        parent::__construct($view, $api);
         $this->flag = true;
+        $this->save_event = $save_event;
     }
 
     public function run(array $options = []) {
@@ -28,7 +34,7 @@ class Start extends Command {
                     $this->flag = false;
                 }
             }
-            sleep(1);
+            sleep($options['sleep']);
         }
         $this->flag = true;
         $this->telegramApi->sendMessage("Please, write text event", $options["user_id"]);
@@ -43,18 +49,18 @@ class Start extends Command {
                     $this->flag = false;
                 }
             }
-            sleep(1);
+            sleep($options['sleep']);
         }
         $this->flag = true;
         $this->telegramApi->sendMessage("Please, write time event in cron format (* * * * *)", $options["user_id"]);
-        $pattern = '/^(\*|[0-9]+|\*\/[0-9]+|[0-9]+-[0-9]+|[0-9]+(,[0-9]+)*){1}( (\*|[0-9]+|\*\/[0-9]+|[0-9]+-[0-9]+|[0-9]+(,[0-9]+)*)){4}$/';
+        $pattern = '/^(\*|[0-9]+|\*\/[0-9]+|[0-9]+-[0-9]+|([0-9]+,)*[0-9]+)' . '( (\*|[0-9]+|\*\/[0-9]+|[0-9]+-[0-9]+|([0-9]+,)*[0-9]+)){4}$/';
         while ($this->flag) {
             $messagesResponse = $this->telegramApi->getMessages();
             if ($messagesResponse['ok']) {
                 $lastmessage = end($messagesResponse['result'])['message']['text'];
                 if ($lastmessage != "/start" && $lastmessage != $endmessage) {
-                    $this->telegramApi->sendMessage("Ok, your crone time event is '" . $lastmessage . "'", $options["user_id"]);
                     if (preg_match($pattern, $lastmessage)) {
+                        $this->telegramApi->sendMessage("Ok, your crone time event is '" . $lastmessage . "'", $options["user_id"]);
                         $newEventTime = $lastmessage;
                         $endmessage = $lastmessage;
                         $this->flag = false;
@@ -66,10 +72,9 @@ class Start extends Command {
                     
                 }
             }
-            sleep(1);
+            sleep($options['sleep']);
         }
         $this->telegramApi->sendMessage("Enter event sussful. New event - '$newEventName', text - '$newEventText' evrytime in '$newEventTime'", $options["user_id"]);
-        $save_event = new Save_event();
-        $save_event->run(["name" => $newEventName, "receiver" => $options["user_id"], "text" => $newEventText, "cron" => $newEventTime]);
+        $this->save_event->run(["name" => $newEventName, "receiver" => $options["user_id"], "text" => $newEventText, "cron" => $newEventTime]);
     }
 }
