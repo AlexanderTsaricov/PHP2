@@ -3,6 +3,8 @@ require __DIR__ . '/vendor/autoload.php'; // ✅ самый прямой пут�
 use App\src\Controllers\Gt_messages;
 use Dotenv\Dotenv;
 
+//TODO: переделать и пофиксить после переделок и фиксов
+
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load(); 
 

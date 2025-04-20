@@ -21,6 +21,7 @@ $logger = new Logs();
 
 $running = true;
 
+//TODO: переделать и пофиксить после переделок и фиксов
 
 while ($running) {
     $logger->write("Worker started with PID: " . getmypid());

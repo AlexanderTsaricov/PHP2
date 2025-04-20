@@ -5,6 +5,11 @@
             "App\\src\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "Tests/"
+        }
+    },
     "authors": [
         {
             "name": "AlexanderTsaricov",

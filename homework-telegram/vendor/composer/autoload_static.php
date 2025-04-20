@@ -69,6 +69,7 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
         'A' => 
         array (
             'App\\src\\' => 8,
+            'App\\Tests\\' => 10,
         ),
     );
 
@@ -157,6 +158,10 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
         'App\\src\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
+        ),
+        'App\\Tests\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Tests',
         ),
     );
 

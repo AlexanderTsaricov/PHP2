@@ -6,13 +6,13 @@ use App\src\Service\TelegramApi;
 use App\src\View\View;
 
 class DeamonEventsSender extends Command {
-    private $running = true;
+    protected $running = true;
 
-    private Logs $logger;
+    protected Logs $logger;
 
-    private EventHandler $eventHandler;
+    protected EventHandler $eventHandler;
 
-    private $lastSendEvent;
+    protected $lastSendEvent;
 
     public function __construct(View $view, TelegramApi $api, EventHandler $eventHandler, Logs $logger) {
         parent::__construct($view, $api);

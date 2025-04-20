@@ -27,4 +27,5 @@ return array(
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
     'Cron\\' => array($vendorDir . '/dragonmantank/cron-expression/src/Cron'),
     'App\\src\\' => array($baseDir . '/src'),
+    'App\\Tests\\' => array($baseDir . '/Tests'),
 );
