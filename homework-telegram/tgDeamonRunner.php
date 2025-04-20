@@ -2,6 +2,7 @@
 
 require __DIR__ . '/vendor/autoload.php'; // ✅ самый прямой путь
 use App\src\Controllers\Gt_messages;
+use App\src\Controllers\Save_event;
 use App\src\Controllers\Tg_controllers\GetEvents;
 use App\src\Controllers\Tg_controllers\Start;
 use App\src\Controllers\Tg_controllers\TimeSenderEvents;
@@ -9,19 +10,25 @@ use App\src\Logs\Logs;
 use App\src\Service\TelegramApi;
 use App\src\View\ConsoleView;
 use Dotenv\Dotenv;
+use App\src\Storage\Database;
+
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load(); 
-use App\src\Storage\Database;
 
-$timeEventSender = new TimeSenderEvents();
+$logger = new Logs();
+$view = new ConsoleView($logger);
+$telegram = new TelegramApi();
+$database = new Database($view);
+$timeEventSender = new TimeSenderEvents($view, $telegram, $database, $logger);
 $timeEventSender->run();
+$save_event = new Save_event($view, $telegram, $database);
 
 $logger = new Logs();
 
 $running = true;
 
-//TODO: переделать и пофиксить после переделок и фиксов
+
 
 while ($running) {
     $logger->write("Worker started with PID: " . getmypid());
@@ -36,12 +43,8 @@ while ($running) {
         $running = false;
     });
 
-    $view = new ConsoleView();
-    $telegram = new TelegramApi();
     $messagesResponse = $telegram->getMessages();
-
-    $db = new Database();
-    $connection = $db::connect();
+    $connection = $database->connect();
 
     $sql = <<<SQL
         CREATE TABLE IF NOT EXISTS events (
@@ -81,11 +84,11 @@ while ($running) {
                 file_put_contents(__DIR__ . "/src/Database/lastidmessage.json", '{"last": ' . $comanndMessage['id'] . "}");
                 switch (substr($comanndMessage['message'], 1)) {
                     case "start":
-                        $start = new Start();
+                        $start = new Start($view, $telegram, $save_event);
                         $start->run($comanndMessage);
                         break;
                     case "get":
-                        $getEvents = new GetEvents();
+                        $getEvents = new GetEvents($view, $database, $telegram);
                         $getEvents->run($comanndMessage);
                         break;
                     default:
