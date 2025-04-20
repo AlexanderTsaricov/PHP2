@@ -1,6 +1,5 @@
 <?php
 
-use App\src\Controllers\DeamonEventsSender;
 use App\src\Controllers\Handlers\EventHandler;
 use App\src\Logs\Logs;
 use App\src\Service\TelegramApi;
