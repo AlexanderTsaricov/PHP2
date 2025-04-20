@@ -1,9 +1,12 @@
 <?php
 require __DIR__ . '/vendor/autoload.php'; // ✅ самый прямой путь
 use App\src\Controllers\Gt_messages;
+use App\src\Logs\Logs;
+use App\src\Service\TelegramApi;
+use App\src\View\ConsoleView;
 use Dotenv\Dotenv;
 
-//TODO: переделать и пофиксить после переделок и фиксов
+
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load(); 
@@ -25,9 +28,14 @@ use App\src\Controllers\Get_events;
 $options = getopt("c:", ["name:", "receiver:", "text:", "cron:"]);
 $params = [];
 
+$logger = new Logs();
+$view = new ConsoleView($logger);
+$telegram = new TelegramApi();
+$eventHandler = new EventHandler($db);
+
 $command = $options["c"] ? $options["c"] : null;
-$db = new Database();
-$connection = $db::connect();
+$db = new Database($view);
+$connection = $db->connect();
 $sql = <<<SQL
     CREATE TABLE IF NOT EXISTS events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,16 +53,16 @@ if ($command === null) {
 
 switch ($command) {
     case "save_event":
-        $save_event = new Save_event();
+        $save_event = new Save_event($view, $telegram, $db);
         $save_event->run($options);
         break;
     case "get_events":
-        $get_events = new Get_events();
+        $get_events = new Get_events($view, $telegram, $db);
         $get_events->run();
         break;
     case "send_events":
-        $events = EventHandler::handleEvent();
-        $sender = new EventSender();
+        $events = $eventHandler->handleEvent();
+        $sender = new EventSender($api, $view);
         foreach ($events as $event) {
             $eventParametrs["message"] = $event['text'];
             $eventParametrs["receiver"] = $event['receiver'];
@@ -62,11 +70,11 @@ switch ($command) {
         }
         break;
     case 'deamon_events_sender':
-        $deamon = new DeamonEventsSender();
+        $deamon = new DeamonEventsSender($view, $telegram, $eventHandler, $logger);
         $deamon->run();
         break;
     case 'gt_messages':
-        $gt_messages = new Gt_messages();
+        $gt_messages = new Gt_messages($view, $telegram);
         $gt_messages->run();
         break;
     default:

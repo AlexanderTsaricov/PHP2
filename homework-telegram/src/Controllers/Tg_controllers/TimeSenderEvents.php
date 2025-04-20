@@ -8,6 +8,8 @@ use App\src\Model\Event;
 use App\src\Storage\Database;
 use PDO;
 use App\src\Logs\Logs;
+use App\src\Service\TelegramApi;
+use App\src\View\View;
 
 class TimeSenderEvents extends Command {
     private Database $db;
@@ -17,12 +19,15 @@ class TimeSenderEvents extends Command {
     private $lastSendEvent;
     private $childPid;
 
-    public function __construct() {
-        parent::__construct();
-        $this->db = new Database();
-        $this->connection = $this->db::connect();
-        $this->logger = new Logs();
+    private EventHandler $eventHandler;
+
+    public function __construct(View $view, TelegramApi $api, Database $database, Logs $logger) {
+        parent::__construct($view, $api);
+        $this->db = $database;
+        $this->connection = $this->db->connect();
+        $this->logger = $logger;
         $this->lastSendEvent = "";
+        $this->eventHandler = new EventHandler($this->db,);
     }
 
     public function run(array $options = []) {
@@ -43,7 +48,7 @@ class TimeSenderEvents extends Command {
 
             while ($this->running) {
                 pcntl_signal_dispatch();
-                $events = EventHandler::handleEvent();
+                $events = $this->eventHandler->handleEvent();
 
                 foreach ($events as $event) {
                     if ($this->lastSendEvent !== $event['id']) {
