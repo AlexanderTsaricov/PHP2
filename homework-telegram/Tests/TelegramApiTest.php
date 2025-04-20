@@ -2,6 +2,7 @@
 require_once 'vendor/autoload.php';
 use App\src\Service\TelegramApi;
 use phpmock\mockery\PHPMockery;
+use PHPUnit\Framework\TestCase;
 
 class TelegramApiTest extends PHPUnit\Framework\TestCase {
 
@@ -110,7 +111,7 @@ class TelegramApiTest extends PHPUnit\Framework\TestCase {
         });
 
 
-        $api = new TelegramApi(null, "TEST_TOKEN");
+        $api = new TelegramApi();
         $result = $api->sendMessage("Hello", 12345);
 
         $this->assertEquals($validResponse, $result);

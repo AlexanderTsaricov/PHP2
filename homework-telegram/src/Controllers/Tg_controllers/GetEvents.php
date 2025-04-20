@@ -2,7 +2,9 @@
 namespace App\src\Controllers\Tg_controllers;
 use App\src\Controllers\Command;
 use App\src\Model\Event;
+use App\src\Service\TelegramApi;
 use App\src\Storage\Database;
+use App\src\View\View;
 use PDO;
 
 
@@ -12,10 +14,10 @@ class GetEvents extends Command {
 
     private $connection;
 
-    public function __construct() {
-        parent::__construct();
-        $this->db = new Database();
-        $this->connection = $this->db::connect();
+    public function __construct(View $view, Database $db, TelegramApi $api) {
+        parent::__construct($view, $api);
+        $this->db = $db;
+        $this->connection = $this->db->connect();
     }
 
     public function run(array $options = []) {

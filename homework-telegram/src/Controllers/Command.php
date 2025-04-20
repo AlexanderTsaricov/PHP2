@@ -10,13 +10,11 @@ abstract class Command {
     protected $name;
     protected $description;
 
-    protected ConsoleView $view;
+    protected View $view;
 
     protected TelegramApi $telegramApi;
 
-    public function run(array $options = []) {
-        echo "run command";
-    }
+    abstract public function run(array $options = []);
 
     public function __construct(View $view, TelegramApi $telegramApi) {
         $this->view = $view;

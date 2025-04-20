@@ -19,7 +19,7 @@ class Get_events extends Command {
     }
     
     public function run(array $options = []) {
-        $connection = $this->db::connect();
+        $connection = $this->db->connect();
         $stmt = $connection->query("SELECT * FROM events");
         $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

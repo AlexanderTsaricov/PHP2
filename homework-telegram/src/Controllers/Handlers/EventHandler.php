@@ -1,22 +1,26 @@
 <?php
 
 namespace App\src\Controllers\Handlers;
-use App\src\Model\Event;
 use App\src\Storage\Database;
 use PDO;
 use Cron\CronExpression;
 
 class EventHandler {
+    private Database $db;
+
+    public function __construct(Database $db) {
+        $this->db = $db;
+    }
+
     /**
      * Summary of handleEvent
      * 
      * @return array return enets where event corn parameter corresponds to time in event
      */
-    public static function handleEvent():array
+    public function handleEvent():array
     {
         $result = [];
-        $db = new Database();
-        $connection = $db::connect();
+        $connection = $this->db->connect();
         $stmt = $connection->query("SELECT * FROM events");
         $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
