@@ -2,32 +2,41 @@
 namespace App\src\Controllers;
 use App\src\Controllers\Handlers\EventHandler;
 use App\src\Logs\Logs;
+use App\src\Service\TelegramApi;
+use App\src\View\View;
 
 class DeamonEventsSender extends Command {
     private $running = true;
 
     private Logs $logger;
 
+    private EventHandler $eventHandler;
+
     private $lastSendEvent;
 
-    public function __construct() {
-        parent::__construct();
-        $this->logger = new Logs();
+    public function __construct(View $view, TelegramApi $api, EventHandler $eventHandler, Logs $logger) {
+        parent::__construct($view, $api);
+        $this->logger = $logger;
         $this->lastSendEvent = "";
+        $this->eventHandler = $eventHandler;
+    }
+
+    protected function setupSignalHandlers() {
+        pcntl_signal(SIGTERM, [$this, 'stopDaemon']);
+        pcntl_signal(SIGINT,  [$this, 'stopDaemon']);
+        pcntl_signal(SIGHUP,  [$this, 'stopDaemon']);
     }
 
     public function run($options = []) {
         $this->logger->write("Worker started with PID: " . getmypid());
     
         
-        pcntl_signal(SIGTERM, [$this, 'stopDaemon']);
-        pcntl_signal(SIGINT, [$this, 'stopDaemon']);
-        pcntl_signal(SIGHUP, [$this, 'stopDaemon']);
+        $this->setupSignalHandlers();
     
         while ($this->running) {
             pcntl_signal_dispatch();
     
-            $events = EventHandler::handleEvent();
+            $events = $this->eventHandler->handleEvent();
             foreach ($events as $event) {
                 if ($this->lastSendEvent != $event['receiver']) {
                     $this->logger->write(
@@ -37,7 +46,7 @@ class DeamonEventsSender extends Command {
                 }
             }
     
-            sleep(1);
+            sleep($options['sleep']);
         }
     
         $this->logger->write("Worker shutting down");
