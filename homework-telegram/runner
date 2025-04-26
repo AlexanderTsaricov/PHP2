@@ -31,10 +31,11 @@ $params = [];
 $logger = new Logs();
 $view = new ConsoleView($logger);
 $telegram = new TelegramApi();
+$db = new Database($view);
 $eventHandler = new EventHandler($db);
 
 $command = $options["c"] ? $options["c"] : null;
-$db = new Database($view);
+
 $connection = $db->connect();
 $sql = <<<SQL
     CREATE TABLE IF NOT EXISTS events (

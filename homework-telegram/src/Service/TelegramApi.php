@@ -1,16 +1,29 @@
 <?php
 
 namespace App\src\Service;
+use App\src\Cache\Redis;
+use PHPUnit\Framework\MockObject\Stub\ReturnSelf;
+use Predis\Client;
 
 class TelegramApi {
-    // Не вижу смысла реализовывать через интерфейс
     private $url = "";
+    private int $offset;
+    private Redis $redis;
 
     function __construct( $url=null, $token = null ) {
         if ( is_null( $token ) ) {
             $token = $_ENV['TELEGRAM_TOKEN'];
         }
         $this->url = $url ? $url : "https://api.telegram.org/bot" . $token . "/";
+        $this->offset = 0;
+
+        $client = new Client([
+            'scheme' => 'tcp',
+            'host' => '127.0.0.1',
+            'port' => 6379
+        ]);
+
+        $this->redis = new Redis($client);
     }
 
     /**
@@ -18,9 +31,42 @@ class TelegramApi {
      * @return array messages from telegrams bot
      */
     public function getMessages(): array {
-        $response = file_get_contents( $this->url . "getUpdates" );
-        $messages = json_decode( $response, true );
-        return $messages;
+
+        $this->offset = $this->redis->get("telegramBot:offset", 0);
+
+        $response = file_get_contents( $this->url . "getUpdates?offset=" . $this->offset+1);
+        $result = json_decode( $response, true );
+
+        if (!$result['ok']) {
+            throw new \Exception('Error: ' . $response['error_code']);
+        }
+
+        
+        if (count($result['result']) > 0) {
+            $oldmessages = json_decode($this->redis->get("telegramBot:oldMessages", false), true);
+
+            if ($oldmessages) {
+                array_push($oldmessages, ...$result['result']);
+
+                $this->redis->set('telegramBot:oldMessages', json_encode($oldmessages));
+                $this->redis->set('telegramBot:offset', end($oldmessages)['update_id']);
+
+                return $oldmessages;
+            } else {
+                $this->redis->set('telegramBot:oldMessages', json_encode($result['result']));
+                $this->redis->set('telegramBot:offset', end($result['result'])['update_id']);
+
+                return $result['result'];
+            }
+        } else {
+            $oldMessages = json_decode($this->redis->get('telegramBot:oldMessages'), true);
+
+            if ($oldMessages) {
+                return $oldMessages;
+            } else {
+                return $result['result'];
+            }
+        }
     }
 
     /**

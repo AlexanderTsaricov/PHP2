@@ -65,7 +65,7 @@ class Redis implements CacheInterface {
 
     private function convertTtlToSeconds ($ttl):int {
         if ($ttl instanceof \DateInterval) {
-            return (new \DateTime()->setTimestamp(0)->add($ttl)->getTimestamp());
+            return (new \DateTime())->setTimestamp(0)->add($ttl)->getTimestamp();
         }
         return $ttl;
     }
