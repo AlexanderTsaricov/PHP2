@@ -47,6 +47,7 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
         array (
             'Psr\\SimpleCache\\' => 16,
             'Psr\\Container\\' => 14,
+            'Predis\\' => 7,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
         ),
@@ -131,6 +132,10 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
         'Psr\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Predis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/predis/predis/src',
         ),
         'PhpParser\\' => 
         array (
