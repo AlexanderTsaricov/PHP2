@@ -3,7 +3,7 @@
         'name' => 'app/src',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '92f639ed7b4518c5b2cf121d8974aa5f5a3bed27',
+        'reference' => '922d90812420707eb9250d8340d3f61bfb508bba',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'app/src' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '92f639ed7b4518c5b2cf121d8974aa5f5a3bed27',
+            'reference' => '922d90812420707eb9250d8340d3f61bfb508bba',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -225,6 +225,15 @@
             'provided' => array(
                 0 => '1.0|2.0|3.0',
             ),
+        ),
+        'psr/simple-cache' => array(
+            'pretty_version' => '3.0.0',
+            'version' => '3.0.0.0',
+            'reference' => '764e0b3939f5ca87cb904f570ef9be2d78a07865',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/simple-cache',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'sebastian/cli-parser' => array(
             'pretty_version' => '4.0.0',
