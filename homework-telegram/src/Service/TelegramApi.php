@@ -10,12 +10,13 @@ class TelegramApi {
     private int $offset;
     private Redis $redis;
 
-    function __construct( $url=null, $token = null ) {
+    function __construct( $url=null, $token = null, ?Redis $redis = null ) {
         if ( is_null( $token ) ) {
             $token = $_ENV['TELEGRAM_TOKEN'];
         }
         $this->url = $url ? $url : "https://api.telegram.org/bot" . $token . "/";
         $this->offset = 0;
+
 
         $client = new Client([
             'scheme' => 'tcp',
@@ -23,7 +24,12 @@ class TelegramApi {
             'port' => 6379
         ]);
 
-        $this->redis = new Redis($client);
+        if ($redis == null) {
+            $this->redis = new Redis($client);
+        } else {
+            $this->redis = $redis;
+        }
+
     }
 
     /**
@@ -38,7 +44,7 @@ class TelegramApi {
         $result = json_decode( $response, true );
 
         if (!$result['ok']) {
-            throw new \Exception('Error: ' . $response['error_code']);
+            return $result;
         }
 
         
@@ -46,7 +52,7 @@ class TelegramApi {
             $oldmessages = json_decode($this->redis->get("telegramBot:oldMessages", false), true);
 
             if ($oldmessages) {
-                array_push($oldmessages, ...$result['result']);
+                array_unshift($result['result'], ...$oldmessages);
 
                 $this->redis->set('telegramBot:oldMessages', json_encode($oldmessages));
                 $this->redis->set('telegramBot:offset', end($oldmessages)['update_id']);
@@ -56,15 +62,19 @@ class TelegramApi {
                 $this->redis->set('telegramBot:oldMessages', json_encode($result['result']));
                 $this->redis->set('telegramBot:offset', end($result['result'])['update_id']);
 
-                return $result['result'];
+                return $result;
             }
         } else {
             $oldMessages = json_decode($this->redis->get('telegramBot:oldMessages'), true);
 
             if ($oldMessages) {
-                return $oldMessages;
+                $cacheResult = [
+                    'ok' => true,
+                    'result' => $oldMessages
+                ];
+                return $cacheResult;
             } else {
-                return $result['result'];
+                return $result;
             }
         }
     }

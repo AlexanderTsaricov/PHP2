@@ -98,7 +98,7 @@ while ($running) {
         }
 
     } else {
-        $view->send("Error: " .$messagesResponse['error_code']);
+        $view->send("Error: " . $messagesResponse['error_code']);
     }
 
 

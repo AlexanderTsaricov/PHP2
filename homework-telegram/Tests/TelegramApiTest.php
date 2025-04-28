@@ -1,5 +1,7 @@
 <?php
 require_once 'vendor/autoload.php';
+
+use App\src\Cache\Redis;
 use App\src\Service\TelegramApi;
 use phpmock\mockery\PHPMockery;
 use PHPUnit\Framework\TestCase;
@@ -46,12 +48,25 @@ class TelegramApiTest extends PHPUnit\Framework\TestCase {
                 ]
             ]
         ];
+        $redisMock = \Mockery::mock(Redis::class);
+        $redisMock->shouldReceive('get')
+            ->with('telegramBot:offset', 0)
+            ->andReturn(1);
+        $redisMock->shouldReceive('get')
+            ->with('telegramBot:oldMessages', false)
+            ->andReturn(false);
+        $redisMock->shouldReceive('set')
+            ->with('telegramBot:oldMessages', \Mockery::type('string'))
+            ->once();
+        $redisMock->shouldReceive('set')
+            ->with('telegramBot:offset', 734066032)
+            ->once();
         $jsonResponse = json_encode($data);
         $fileGetContentsMock = PHPMockery::mock('App\src\Service', "file_get_contents")
             ->once()
-            ->with("https://api.telegram.org/botTEST_TOKEN/getUpdates")
+            ->with("https://api.telegram.org/botTEST_TOKEN/getUpdates?offset="."2")
             ->andReturn($jsonResponse);
-        $api = new TelegramApi(null, "TEST_TOKEN");
+        $api = new TelegramApi(null, "TEST_TOKEN", $redisMock);
         $result = $api->getMessages();
         $this->assertEquals($data, $result);
     }

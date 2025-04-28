@@ -12,21 +12,21 @@ class Gt_messages extends Command {
     }
 
     public function run (array $options = []) {
-        try {
-            $messages = $this->telegramApi->getMessages();
-        } catch (\Exception $e) {
-            $this->view->send($e);
-        }
         
-
-        foreach ($messages as $message) {
-            $sendToViewMessage = '';
-            $sendToViewMessage .= "Message id: " . $message['message']['message_id'] . "\n";
-            $sendToViewMessage .= "From user: ". $message['message']["from"]["username"] . " with id: " . $message['message']["from"]["id"] . "\n";
-            $sendToViewMessage .= "Text: ". $message['message']["text"];
-
-            $this->view->send($sendToViewMessage);
-        }
+        $messages = $this->telegramApi->getMessages();
+        
+        if ($messages['ok']) {
+            foreach ($messages['result'] as $message) {
+                $sendToViewMessage = '';
+                $sendToViewMessage .= "Message id: " . $message['message']['message_id'] . "\n";
+                $sendToViewMessage .= "From user: ". $message['message']["from"]["username"] . " with id: " . $message['message']["from"]["id"] . "\n";
+                $sendToViewMessage .= "Text: ". $message['message']["text"];
+    
+                $this->view->send($sendToViewMessage);
+            }
+        } else {
+            $this->view->send("Error: " . $messages['error_code']);
+        }       
         
     }
 }
