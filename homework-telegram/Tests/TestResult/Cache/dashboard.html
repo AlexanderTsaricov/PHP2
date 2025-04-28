@@ -2,12 +2,12 @@
 <html lang="en">
  <head>
   <meta charset="UTF-8">
-  <title>Dashboard for /media/alexander/Disk2/Programming/PHP2/homeworks/homework-telegram/src/Controllers/Handlers</title>
+  <title>Dashboard for /media/alexander/Disk2/Programming/PHP2/homeworks/homework-telegram/src/Cache</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="../../_css/bootstrap.min.css?v=12.1.2" rel="stylesheet" type="text/css">
-  <link href="../../_css/nv.d3.min.css?v=12.1.2" rel="stylesheet" type="text/css">
-  <link href="../../_css/style.css?v=12.1.2" rel="stylesheet" type="text/css">
-  <link href="../../_css/custom.css" rel="stylesheet" type="text/css">
+  <link href="../_css/bootstrap.min.css?v=12.1.2" rel="stylesheet" type="text/css">
+  <link href="../_css/nv.d3.min.css?v=12.1.2" rel="stylesheet" type="text/css">
+  <link href="../_css/style.css?v=12.1.2" rel="stylesheet" type="text/css">
+  <link href="../_css/custom.css" rel="stylesheet" type="text/css">
  </head>
  <body>
   <header>
@@ -16,9 +16,8 @@
      <div class="col-md-12">
       <nav aria-label="breadcrumb">
        <ol class="breadcrumb">
-         <li class="breadcrumb-item"><a href="../../index.html">/media/alexander/Disk2/Programming/PHP2/homeworks/homework-telegram/src</a></li>
-         <li class="breadcrumb-item"><a href="../index.html">Controllers</a></li>
-         <li class="breadcrumb-item"><a href="index.html">Handlers</a></li>
+         <li class="breadcrumb-item"><a href="../index.html">/media/alexander/Disk2/Programming/PHP2/homeworks/homework-telegram/src</a></li>
+         <li class="breadcrumb-item"><a href="index.html">Cache</a></li>
          <li class="breadcrumb-item active">(Dashboard)</li>
 
        </ol>
@@ -59,6 +58,7 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="Redis.php.html#8">App\src\Cache\Redis</a></td><td class="text-right">3%</td></tr>
 
        </tbody>
       </table>
@@ -75,6 +75,7 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="Redis.php.html#8">App\src\Cache\Redis</a></td><td class="text-right">278</td></tr>
 
        </tbody>
       </table>
@@ -112,6 +113,15 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="Redis.php.html#11"><abbr title="App\src\Cache\Redis::get">get</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Redis.php.html#15"><abbr title="App\src\Cache\Redis::set">set</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Redis.php.html#25"><abbr title="App\src\Cache\Redis::delete">delete</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Redis.php.html#30"><abbr title="App\src\Cache\Redis::clear">clear</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Redis.php.html#35"><abbr title="App\src\Cache\Redis::getMultiple">getMultiple</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Redis.php.html#43"><abbr title="App\src\Cache\Redis::setMultiple">setMultiple</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Redis.php.html#66"><abbr title="App\src\Cache\Redis::convertTtlToSeconds">convertTtlToSeconds</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Redis.php.html#73"><abbr title="App\src\Cache\Redis::deleteMultiple">deleteMultiple</abbr></a></td><td class="text-right">0%</td></tr>
+       <tr><td><a href="Redis.php.html#78"><abbr title="App\src\Cache\Redis::has">has</abbr></a></td><td class="text-right">0%</td></tr>
 
        </tbody>
       </table>
@@ -128,6 +138,10 @@
         </tr>
        </thead>
        <tbody>
+       <tr><td><a href="Redis.php.html#43"><abbr title="App\src\Cache\Redis::setMultiple">setMultiple</abbr></a></td><td class="text-right">30</td></tr>
+       <tr><td><a href="Redis.php.html#15"><abbr title="App\src\Cache\Redis::set">set</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Redis.php.html#35"><abbr title="App\src\Cache\Redis::getMultiple">getMultiple</abbr></a></td><td class="text-right">6</td></tr>
+       <tr><td><a href="Redis.php.html#66"><abbr title="App\src\Cache\Redis::convertTtlToSeconds">convertTtlToSeconds</abbr></a></td><td class="text-right">6</td></tr>
 
        </tbody>
       </table>
@@ -141,9 +155,9 @@
     </p>
    </footer>
   </div>
-  <script src="../../_js/jquery.min.js?v=12.1.2" type="text/javascript"></script>
-  <script src="../../_js/d3.min.js?v=12.1.2" type="text/javascript"></script>
-  <script src="../../_js/nv.d3.min.js?v=12.1.2" type="text/javascript"></script>
+  <script src="../_js/jquery.min.js?v=12.1.2" type="text/javascript"></script>
+  <script src="../_js/d3.min.js?v=12.1.2" type="text/javascript"></script>
+  <script src="../_js/nv.d3.min.js?v=12.1.2" type="text/javascript"></script>
   <script type="text/javascript">
 $(document).ready(function() {
   nv.addGraph(function() {
@@ -156,7 +170,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#classCoverageDistribution svg')
-      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,0,0,1], "Class Coverage"))
+      .datum(getCoverageDistributionData([0,1,0,0,0,0,0,0,0,0,0,0], "Class Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -174,7 +188,7 @@ $(document).ready(function() {
       .yAxis.tickFormat(d3.format('d'));
 
     d3.select('#methodCoverageDistribution svg')
-      .datum(getCoverageDistributionData([0,0,0,0,0,0,0,0,0,0,0,2], "Method Coverage"))
+      .datum(getCoverageDistributionData([9,0,0,0,0,0,0,0,0,0,0,1], "Method Coverage"))
       .transition().duration(500).call(chart);
 
     nv.utils.windowResize(chart.update);
@@ -224,7 +238,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Cyclomatic Complexity');
 
     d3.select('#classComplexity svg')
-      .datum(getComplexityData([[100,4,"<a href=\"EventHandler.php.html#8\">App\\src\\Controllers\\Handlers\\EventHandler<\/a>"]], 'Class Complexity'))
+      .datum(getComplexityData([[3.225806451612903,17,"<a href=\"Redis.php.html#8\">App\\src\\Cache\\Redis<\/a>"]], 'Class Complexity'))
       .transition()
       .duration(500)
       .call(chart);
@@ -248,7 +262,7 @@ $(document).ready(function() {
     chart.yAxis.axisLabel('Method Complexity');
 
     d3.select('#methodComplexity svg')
-      .datum(getComplexityData([[100,1,"<a href=\"EventHandler.php.html#11\">App\\src\\Controllers\\Handlers\\EventHandler::__construct<\/a>"],[100,3,"<a href=\"EventHandler.php.html#20\">App\\src\\Controllers\\Handlers\\EventHandler::handleEvent<\/a>"]], 'Method Complexity'))
+      .datum(getComplexityData([[100,1,"<a href=\"Redis.php.html#9\">App\\src\\Cache\\Redis::__construct<\/a>"],[0,1,"<a href=\"Redis.php.html#11\">App\\src\\Cache\\Redis::get<\/a>"],[0,2,"<a href=\"Redis.php.html#15\">App\\src\\Cache\\Redis::set<\/a>"],[0,1,"<a href=\"Redis.php.html#25\">App\\src\\Cache\\Redis::delete<\/a>"],[0,1,"<a href=\"Redis.php.html#30\">App\\src\\Cache\\Redis::clear<\/a>"],[0,2,"<a href=\"Redis.php.html#35\">App\\src\\Cache\\Redis::getMultiple<\/a>"],[0,5,"<a href=\"Redis.php.html#43\">App\\src\\Cache\\Redis::setMultiple<\/a>"],[0,2,"<a href=\"Redis.php.html#66\">App\\src\\Cache\\Redis::convertTtlToSeconds<\/a>"],[0,1,"<a href=\"Redis.php.html#73\">App\\src\\Cache\\Redis::deleteMultiple<\/a>"],[0,1,"<a href=\"Redis.php.html#78\">App\\src\\Cache\\Redis::has<\/a>"]], 'Method Complexity'))
       .transition()
       .duration(500)
       .call(chart);
