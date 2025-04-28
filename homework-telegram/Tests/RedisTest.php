@@ -158,6 +158,41 @@ class RedisTest extends PHPUnit\Framework\TestCase {
         $this->assertTrue($result);
     }
 
+    public function testSetMultipleWithTtlWithTrueSend() {
+        $testValues = ['value', 'value2'];
+        $testKeys = ['key', 'key2'];
+        $testData = [
+            $testKeys[0] => $testValues[0],
+            $testKeys[1] => $testValues[1],
+        ];
+        $testTtl = new \DateInterval('PT3600S');
+
+        $mockClient = \Mockery::mock(Client::class);
+        $mockClient->shouldReceive('multi')
+        ->once();
+        $mockClient->shouldReceive('set')
+        ->with($testKeys[0], $testValues[0])
+        ->once();
+        $mockClient->shouldReceive('expire')
+        ->with($testKeys[0], 3600)
+        ->once();
+        $mockClient->shouldReceive('set')
+        ->with($testKeys[1], $testValues[1])
+        ->once();
+        $mockClient->shouldReceive('expire')
+        ->with($testKeys[1], 3600)
+        ->once();
+        $mockClient->shouldReceive('exec')
+        ->once()
+        ->andReturn([true, true]);
+
+
+        $redis = new Redis($mockClient);
+        $result = $redis->setMultiple($testData, $testTtl);
+
+        $this->assertTrue($result);
+    }
+
     #[TestWith([[false, false]])]
     #[TestWith([[false, true]])]
     #[TestWith([[true, false]])]
