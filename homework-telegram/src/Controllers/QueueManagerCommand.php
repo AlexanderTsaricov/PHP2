@@ -25,7 +25,9 @@ class QueueManagerCommand extends Command
 
             if ($message) {
                 $data = unserialize($message);
-                $class = new EventSender($data['reveiver'], $data['message']);
+                $class = new EventSender($this->queue, $this->telegramApi);
+                $class->setMessage($data['message']);
+                $class->setReceiver($data['receiver']);
                 $class->handle();
                 $this->queue->ackLastMessage();
             }
