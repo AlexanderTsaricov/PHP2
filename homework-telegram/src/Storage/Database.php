@@ -15,7 +15,8 @@ class Database {
 
     public function connect($pathToBd = null): PDO | null {
         if (self::$connection === null) {
-            self::$connection = new PDO('sqlite:' . $pathToBd);
+            $pathToDb = __DIR__ . '/../Database/bd.sqlite';
+            self::$connection = new PDO('sqlite:' . $pathToDb);
             self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
         }

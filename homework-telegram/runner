@@ -66,9 +66,9 @@ switch ($command) {
         break;
     case "send_events":
         $events = $eventHandler->handleEvent();
-        $sender = new EventSender($queue, $api);
+        $sender = new EventSender($queue, $telegram);
         foreach ($events as $event) {
-            $sender->sendMessage($event['receiver'], $event['message']);
+            $sender->sendMessage($event['receiver'], $event['text']);
         }
         break;
     case 'deamon_events_sender':

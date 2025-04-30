@@ -555,3 +555,27 @@ From user: salispiligrim with id: 389495379
 Text: tt
 События в базе:
 
+Message id: 413
+From user: salispiligrim with id: 389495379
+Text: tt
+[31mError receiver parameter: don't have parametr receiver. Please add parametr[0m
+[31mError receiver parameter: don't have parametr receiver. Please add parametr[0m
+started command: save_event
+command sussful
+События в базе:
+
+started command: save_event
+command sussful
+События в базе:
+
+started command: save_event
+command sussful
+События в базе:
+
+1: test message (CRON: * * * * *)
+2: test message (CRON: * * * * *)
+3: test message (CRON: * * * * *)
+4: Хуй (CRON: * * * * *)
+5: Член (CRON: * * * * *)
+6: Тест (CRON: * * * * *)
+7: test (CRON: * * * * *)
