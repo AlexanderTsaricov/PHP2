@@ -8,14 +8,18 @@ use App\src\View\View;
 class QueueManagerCommand extends Command
 {
     protected Queue $queue;
-    public function __construct(View $view, TelegramApi $api, Queue $queue)
+
+    private bool $oneTime;
+    public function __construct(View $view, TelegramApi $api, Queue $queue, bool $oneTime = false)
     {
         parent::__construct($view, $api);
         $this->queue = $queue;
+        $this->oneTime = $oneTime;
     }
     public function run(array $options = []): void
     {
-        while (true) {
+        $flag = true;
+        while ($flag) {
             
             $message = $this->queue->getMessage();
 
@@ -25,8 +29,11 @@ class QueueManagerCommand extends Command
                 $class->handle();
                 $this->queue->ackLastMessage();
             }
-
-            sleep(10);
+            if ($this->oneTime) {
+                $flag = false;
+            } else {
+                sleep(10);
+            }
         }
     }
 }
