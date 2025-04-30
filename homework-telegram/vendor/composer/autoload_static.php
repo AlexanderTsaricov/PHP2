@@ -16,6 +16,7 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
         'c72349b1fe8d0deeedd3a52e8aa814d8' => __DIR__ . '/..' . '/mockery/mockery/library/helpers.php',
         'ce9671a430e4846b44e1c68c7611f9f5' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
+        'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         'a4a119a56e50fbb293281d9a48007e0e' => __DIR__ . '/..' . '/symfony/polyfill-php80/bootstrap.php',
         'b6b991a57620e2fb6b2f66f03fe9ddc2' => __DIR__ . '/..' . '/symfony/string/Resources/functions.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
@@ -24,6 +25,7 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
     public static $prefixLengthsPsr4 = array (
         'p' => 
         array (
+            'phpseclib3\\' => 11,
             'phpmock\\mockery\\' => 16,
             'phpmock\\integration\\' => 20,
             'phpmock\\' => 8,
@@ -50,6 +52,8 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
             'Predis\\' => 7,
             'PhpParser\\' => 10,
             'PhpOption\\' => 10,
+            'PhpAmqpLib\\' => 11,
+            'ParagonIE\\ConstantTime\\' => 23,
         ),
         'M' => 
         array (
@@ -76,6 +80,10 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
     );
 
     public static $prefixDirsPsr4 = array (
+        'phpseclib3\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
+        ),
         'phpmock\\mockery\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-mock/php-mock-mockery/classes',
@@ -144,6 +152,14 @@ class ComposerStaticInit3478481847f37482f7a5a249d58e661e
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'PhpAmqpLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-amqplib/php-amqplib/PhpAmqpLib',
+        ),
+        'ParagonIE\\ConstantTime\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paragonie/constant_time_encoding/src',
         ),
         'Mockery\\' => 
         array (

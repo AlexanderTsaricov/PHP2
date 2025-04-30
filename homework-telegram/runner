@@ -1,7 +1,9 @@
 <?php
 require __DIR__ . '/vendor/autoload.php'; // ✅ самый прямой путь
 use App\src\Controllers\Gt_messages;
+use App\src\Controllers\QueueManagerCommand;
 use App\src\Logs\Logs;
+use App\src\Queue\RabbitMQ;
 use App\src\Service\TelegramApi;
 use App\src\View\ConsoleView;
 use Dotenv\Dotenv;
@@ -33,6 +35,7 @@ $view = new ConsoleView($logger);
 $telegram = new TelegramApi();
 $db = new Database($view);
 $eventHandler = new EventHandler($db);
+$queue = new RabbitMQ('events');
 
 $command = $options["c"] ? $options["c"] : null;
 
@@ -63,11 +66,9 @@ switch ($command) {
         break;
     case "send_events":
         $events = $eventHandler->handleEvent();
-        $sender = new EventSender($api, $view);
+        $sender = new EventSender($queue, $api);
         foreach ($events as $event) {
-            $eventParametrs["message"] = $event['text'];
-            $eventParametrs["receiver"] = $event['receiver'];
-            $sender->run($eventParametrs);
+            $sender->sendMessage($event['receiver'], $event['message']);
         }
         break;
     case 'deamon_events_sender':
@@ -77,6 +78,10 @@ switch ($command) {
     case 'gt_messages':
         $gt_messages = new Gt_messages($view, $telegram);
         $gt_messages->run();
+        break;
+    case 'queue_manager':
+        $queueManager = new QueueManagerCommand($view, $telegram, $queue);
+        $queueManager->run();
         break;
     default:
         die("Error command - invalid command: " . $command . "\n");

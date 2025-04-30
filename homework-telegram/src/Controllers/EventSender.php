@@ -2,30 +2,45 @@
 
 namespace App\src\Controllers;
 
+use App\src\Controllers\Handlers\EventHandler;
+use App\src\Queue\Queue;
+use App\src\Queue\Queueable;
 use App\src\Service\TelegramApi;
 use App\src\View\View;
 
-class EventSender extends Command
+class EventSender implements Queueable
 {
-    protected TelegramApi $telegramApi;
-    protected $name = "event_sender";
-    protected $description = "send event to user";
+    protected TelegramApi $telegram;
+    protected string $receiver;
+    protected string $message;
 
-    public function __construct(TelegramApi $api, View $view) {
-        parent::__construct($view, $api);
-        $this->telegramApi = $api;
-        $this->view = $view;
-        
+    protected Queue $queue;
+
+    public function __construct(Queue $queue, TelegramApi $telegram) {
+        $this->queue = $queue;
+        $this->telegram = $telegram;
     }
-    public function run(array $options = [])
-    {
-        $sendIsOk = $this->telegramApi->sendMessage($options['message'], (int)$options['receiver']);
-        if (!$sendIsOk['ok']) {
-            $this->view->send('Error: '. $sendIsOk['error_code']);
-        } else {
-            $message = date('d.m.y H:i') . " Я отправил сообщение " . $options['message'] . " получателю с id " . $options['receiver'];
-            $this->view->send($message);
-        }
-        
+
+    public function sendMessage(string $receiver, string $message) {
+        $this->toQueue($receiver, $message);
+    }
+
+    public function handle(): void {
+        $this->telegram->sendMessage($this->message, $this->receiver);
+    }
+
+    public function toQueue(...$args): void {
+        $this->receiver = $args[0];
+        $this->message = $args[1];
+
+        $this->queue->sendMessage(serialize(['receiver' => $this->receiver, 'message' => $this->message]));
+    }
+
+    public function setReceiver(string $receiver) {
+        $this->receiver = $receiver;
+    }
+
+    public function setMessage(string $message) {
+        $this->message = $message;
     }
 }

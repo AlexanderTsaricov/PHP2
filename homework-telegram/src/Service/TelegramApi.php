@@ -10,7 +10,7 @@ class TelegramApi {
     private int $offset;
     private Redis $redis;
 
-    function __construct( $url=null, $token = null, ?Redis $redis = null ) {
+    function __construct( $url=null, $token = null, $redis = null ) {
         if ( is_null( $token ) ) {
             $token = $_ENV['TELEGRAM_TOKEN'];
         }
